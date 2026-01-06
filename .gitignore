@@ -1,0 +1,72 @@
+# ENVIRONNEMENT
+.env
+.env.local
+.env.*.local
+*.env
+.env.dev
+.env.development
+.env.test
+.env.production
+!.env.example
+
+# DOCKER
+postgres_data/
+*.sql
+docker-compose.override.yml
+
+# BACKEND
+API/__pycache__/
+API/**/__pycache__/
+API/*.py[cod]
+API/*$py.class
+API/*.so
+API/.Python
+API/venv/
+API/env/
+API/ENV/
+API/*.log
+
+API/media/
+API/staticfiles/
+API/.pytest_cache/
+API/htmlcov/
+API/.coverage
+
+# NODE / NEXT.JS (Front/)
+Front/node_modules/
+Front/.next/
+Front/out/
+Front/build/
+Front/.turbo/
+Front/*.log
+Front/.DS_Store
+Front/.vercel
+Front/.env*.local
+
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*.iml
+.DS_Store
+
+# LOGS
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# TESTS
+coverage/
+.coverage
+htmlcov/
+.pytest_cache/
+node_modules
