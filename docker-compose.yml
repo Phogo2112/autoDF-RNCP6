@@ -1,5 +1,6 @@
 services:
   db:
+    env_file: .env.local
     image: postgres:17
     restart: always
     environment:

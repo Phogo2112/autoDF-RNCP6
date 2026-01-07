@@ -72,11 +72,10 @@ export default function Navbar() {
                     <span
                       className={`
                       px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-300
-                      ${
-                        activeLink === link.href
+                      ${activeLink === link.href
                           ? "text-white bg-white/10"
                           : "text-gray-300 hover:text-white hover:bg-white/5"
-                      }
+                        }
                     `}
                     >
                       {link.label}
@@ -178,10 +177,9 @@ export default function Navbar() {
                       }}
                       className={`
                         block px-4 py-3 rounded-lg text-base font-medium transition-all
-                        ${
-                          activeLink === link.href
-                            ? "bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 text-white border border-white/10"
-                            : "text-gray-300 hover:bg-white/5 hover:text-white"
+                        ${activeLink === link.href
+                          ? "bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 text-white border border-white/10"
+                          : "text-gray-300 hover:bg-white/5 hover:text-white"
                         }
                       `}
                     >

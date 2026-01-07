@@ -29,17 +29,12 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 
-class EstimateSerializer(serializers.ModelSerializer):
+class EstimateInvoiceSerializer(serializers.ModelSerializer):
   class Meta:
-    model = Estimate
-    fields = ['id', 'date', 'firstname']
-    read_only_fields = ['id']
+    model = invoice_estimate
+    fields = ['id', 'price_ht', 'price_tva', 'price_ttc', 'created_at', 'users_id', 'clients_id', 'name_estimate_invoice']
+    read_only_fields = ['id', 'created_at', 'users_id', 'clients_id']
 
-class InvoiceSerializer(serializers.ModelSerializer):
-  class Meta:
-    model = Invoice
-    fields = ['id', 'date', 'firstname', 'lastname', 'departement_number']
-    read_only_fields = ['id']
 
 class StatisticsSerializer(serializers.ModelSerializer):
   class Meta:
