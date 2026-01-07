@@ -1,17 +1,17 @@
-"use client"
-import { useState } from 'react';
-import Link from 'next/link';
-import { AnimatePresence, motion } from 'framer-motion';
+"use client";
+import { useState } from "react";
+import Link from "next/link";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeLink, setActiveLink] = useState('/');
+  const [activeLink, setActiveLink] = useState("/");
 
   const navLinks = [
-    { href: '/', label: 'Accueil' },
-    { href: '/src/invoice', label: 'Factures' },
-    { href: '/src/estimate', label: 'Devis' },
-    { href: '/src/home', label: 'Dashboard' },
+    { href: "/", label: "Accueil" },
+    { href: "/src/estimate", label: "Devis" },
+    { href: "/src/invoice", label: "Factures" },
+    { href: "/src/home", label: "Dashboard" },
   ];
 
   return (
@@ -30,7 +30,7 @@ export default function Navbar() {
               whileTap={{ scale: 0.95 }}
               className="flex items-center space-x-3"
             >
-              <Link href="/" onClick={() => setActiveLink('/')}>
+              <Link href="/" onClick={() => setActiveLink("/")}>
                 <div className="relative group cursor-pointer">
                   <div className="absolute -inset-2 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 rounded-lg blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
                   <div className="relative flex items-center space-x-3 bg-slate-900 px-4 py-2 rounded-lg border border-white/10">
@@ -69,20 +69,27 @@ export default function Navbar() {
                     onClick={() => setActiveLink(link.href)}
                     className="relative group"
                   >
-                    <span className={`
+                    <span
+                      className={`
                       px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-300
-                      ${activeLink === link.href
-                        ? 'text-white bg-white/10'
-                        : 'text-gray-300 hover:text-white hover:bg-white/5'
+                      ${
+                        activeLink === link.href
+                          ? "text-white bg-white/10"
+                          : "text-gray-300 hover:text-white hover:bg-white/5"
                       }
-                    `}>
+                    `}
+                    >
                       {link.label}
                     </span>
                     {activeLink === link.href && (
                       <motion.div
                         layoutId="activeNav"
                         className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400"
-                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 380,
+                          damping: 30,
+                        }}
                       />
                     )}
                   </Link>
@@ -102,8 +109,18 @@ export default function Navbar() {
                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <span className="relative flex items-center space-x-2">
                   <span>Nouveau document</span>
-                  <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                  <svg
+                    className="w-4 h-4 transition-transform group-hover:translate-x-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 4v16m8-8H4"
+                    />
                   </svg>
                 </span>
               </button>
@@ -125,7 +142,9 @@ export default function Navbar() {
                   className="w-full h-0.5 bg-white rounded-full transition-all"
                 />
                 <motion.span
-                  animate={isOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
+                  animate={
+                    isOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }
+                  }
                   className="w-full h-0.5 bg-white rounded-full transition-all"
                 />
               </div>
@@ -138,7 +157,7 @@ export default function Navbar() {
           {isOpen && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
+              animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
               className="md:hidden border-t border-white/10 bg-slate-900/95 backdrop-blur-xl"
@@ -159,9 +178,10 @@ export default function Navbar() {
                       }}
                       className={`
                         block px-4 py-3 rounded-lg text-base font-medium transition-all
-                        ${activeLink === link.href
-                          ? 'bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 text-white border border-white/10'
-                          : 'text-gray-300 hover:bg-white/5 hover:text-white'
+                        ${
+                          activeLink === link.href
+                            ? "bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 text-white border border-white/10"
+                            : "text-gray-300 hover:bg-white/5 hover:text-white"
                         }
                       `}
                     >

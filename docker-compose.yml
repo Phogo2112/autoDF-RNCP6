@@ -53,8 +53,8 @@ services:
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
-      - API
-      - Front
+      - api
+      - front
 
 volumes:
   postgres_data:
