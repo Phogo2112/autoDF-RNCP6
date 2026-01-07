@@ -1,0 +1,7 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/src/estimate/page": "app/src/estimate/page.js",
+  "/page": "app/page.js",
+  "/src/invoice/page": "app/src/invoice/page.js",
+  "/src/home/page": "app/src/home/page.js"
+}

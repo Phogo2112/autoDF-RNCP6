@@ -70,3 +70,11 @@ coverage/
 htmlcov/
 .pytest_cache/
 node_modules
+
+# NEXT.JS
+Front/autodf/.next/
+Front/autodf/out/
+Front/autodf/build/
+.next/
+out/
+build/
