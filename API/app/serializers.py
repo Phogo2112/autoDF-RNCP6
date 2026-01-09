@@ -4,6 +4,13 @@ from app.models import *
 
 #  hashage de mdp sur le user en bdd et possibilité de modifier le mdp sous demande.
 
+# serializer Clients and Users
+
+class ClientSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Client
+    fields = ['id','firstname','lastname','email','number_phone']
+    read_only_fields = ['id','firstname','lastname','email','number_phone']
 
 class UserSerializer(serializers.ModelSerializer):
   class Meta:
@@ -27,17 +34,32 @@ class UserSerializer(serializers.ModelSerializer):
     instance.save()
     return instance 
 
+# serializer invoice
 
-
-class EstimateInvoiceSerializer(serializers.ModelSerializer):
+class InvoiceSerializer(serializers.ModelSerializer):
   class Meta:
-    model = invoice_estimate
-    fields = ['id', 'price_ht', 'price_tva', 'price_ttc', 'created_at', 'users_id', 'clients_id', 'name_estimate_invoice']
-    read_only_fields = ['id', 'created_at', 'users_id', 'clients_id']
+    model = Invoice
+    fields = ['id', 'price_et', 'price_vat', 'price_ati','created_at','user_id','client_id','modified_at','sent','sent_date']
+    read_only_fields = ['id','created_at','user_id','client_id','modified_at','sent','sent_date']
 
-
-class StatisticsSerializer(serializers.ModelSerializer):
+class InvoiceLineSerializer(serializers.ModelSerializer):
   class Meta:
-    model = Statistics
-    fields = ['id', 'price_ht', 'price_tva', 'price_ttc']
-    read_only_fields = ['id']
+    model = InvoiceLine
+    fields = ['id', 'price_et', 'price_vat', 'price_ati','created_at','user_id','client_id','modified_at','sent','sent_date']
+    read_only_fields = ['id','created_at','user_id','client_id','modified_at','sent','sent_date']
+  
+# serializer estimate
+
+class EstimateSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Estimate
+    fields = ['id', 'price_et', 'price_vat', 'price_ati','created_at','user_id','client_id','modified_at','sent','sent_date']
+    read_only_fields = ['id','created_at','user_id','client_id','modified_at','sent','sent_date']
+
+
+
+class EstimateLineSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = EstimateLine
+    fields = ['id', 'price_et', 'price_vat', 'price_ati','created_at','user_id','client_id','modified_at','sent','sent_date']
+    read_only_fields = ['id','created_at','user_id','client_id','modified_at','sent','sent_date']

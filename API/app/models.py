@@ -5,7 +5,7 @@ from django.core.validators import MinValueValidator
 from django.contrib.auth.hashers import make_password, check_password
 from decimal import Decimal
 from datetime import date
-
+from django.db.models import JSONField
 
 class User(models.Model):
     email = models.EmailField(
@@ -461,9 +461,7 @@ class Invoice(models.Model):
         self.price_et = sum(line.amount_et or 0 for line in lines)
         self.price_vat = sum(line.calculate_vat() for line in lines)
         self.price_ati = self.price_et + self.price_vat
-        
         self.save()
-
 
 class InvoiceLine(models.Model):
     LINE_TYPE_CHOICES = [
@@ -471,6 +469,7 @@ class InvoiceLine(models.Model):
         ('supply', 'Fourniture')
     ]
     
+    # --- Lien avec la facture ---
     invoice = models.ForeignKey(
         Invoice,
         on_delete=models.CASCADE,
