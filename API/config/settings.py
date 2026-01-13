@@ -1,35 +1,58 @@
-
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+import dj_database_url
+import sys
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Charger les variables du .env.local
-load_dotenv(dotenv_path=os.path.join(Path(__file__).resolve().parent.parent, ".env.local"))
+ENV_FILE = BASE_DIR / '.env.local'
+if ENV_FILE.exists():
+    load_dotenv(ENV_FILE, encoding='utf-8', override=True)
+    print(f"✅ Fichier chargé : {ENV_FILE}")
+else:
+    ENV_FILE_FALLBACK = BASE_DIR / '.env'
+    if ENV_FILE_FALLBACK.exists():
+        load_dotenv(ENV_FILE_FALLBACK, encoding='utf-8', override=True)
+        print(f"✅ Fichier chargé : {ENV_FILE_FALLBACK}")
+    else:
+        print(f"❌ ERREUR : Aucun fichier .env trouvé")
+        sys.exit(1)
 
-SECRET_KEY = os.getenv("SECRET_KEY")
-DEBUG = os.getenv("DEBUG") == "True"
+SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key")
+DEBUG = os.getenv("DEBUG", "True") == "True"
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+CORS_ALLOWED_ORIGINS = os.getenv("CORS_ALLOWED_ORIGINS", "http://localhost:3000").split(",")
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(",")
+print("\n=== DEBUG DATABASE CONFIG ===")
+print(f"DB_USER: {os.getenv('DB_USER')}")
+print(f"DB_PASSWORD: {os.getenv('DB_PASSWORD')[:3]}*** (première 3 lettres)")
+print(f"DB_NAME: {os.getenv('DB_NAME')}")
+print(f"DB_HOST: {os.getenv('DB_HOST', 'localhost')}")
+print(f"DB_PORT: {os.getenv('DB_PORT', '5432')}")
 
-CORS_ALLOWED_ORIGINS = os.getenv("CORS_ALLOWED_ORIGINS").split(",")
+db_url = f"postgresql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST', 'localhost')}:{os.getenv('DB_PORT', '5432')}/{os.getenv('DB_NAME')}"
+print(f"\n📌 URL construite :")
+print(f"postgresql://{os.getenv('DB_USER')}:***@{os.getenv('DB_HOST', 'localhost')}:{os.getenv('DB_PORT', '5432')}/{os.getenv('DB_NAME')}")
+print("="*60)
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST', default='localhost'),
-        'PORT': os.getenv('DB_PORT', default='5432'),
+        'NAME': os.getenv('DB_NAME', 'autodf'),
+        'USER': os.getenv('DB_USER', 'postgres'),
+        'PASSWORD': os.getenv('DB_PASSWORD', ''),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '53630'),
+        'OPTIONS': {
+            'client_encoding': 'UTF8',
+        },
     }
 }
 
-# Application definition
-
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -37,7 +60,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'corsheaders',
     'app',
 ]
 
@@ -72,10 +94,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -91,25 +109,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
-
 LANGUAGE_CODE = 'fr-FR'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Paris'
 
 USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
-
 STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
