@@ -90,7 +90,7 @@ class Clients(models.Model):
         verbose_name="Type de client"
     )
     
-    name = models.CharField(
+    name_organisation = models.CharField(
         max_length=255,
         verbose_name="Nom ou raison sociale"
     )
@@ -136,7 +136,7 @@ class Clients(models.Model):
         verbose_name="Téléphone mobile"
     )
     
-    users = models.ForeignKey(
+    users_id = models.ForeignKey(
         Users,
         on_delete=models.CASCADE,
         db_column='users_id',
@@ -172,7 +172,7 @@ class Clients(models.Model):
 
 class Estimates(models.Model):
     
-    users = models.ForeignKey(
+    users_id = models.ForeignKey(
         Users,
         on_delete=models.CASCADE,
         db_column='users_id',
@@ -180,7 +180,7 @@ class Estimates(models.Model):
         verbose_name=f"Créé par {Users.id}"
     )
     
-    clients = models.ForeignKey(
+    clients_id = models.ForeignKey(
         Clients,
         on_delete=models.CASCADE,
         db_column='clients_id',
@@ -268,8 +268,9 @@ class EstimateLines(models.Model):
         ('benefit', 'Prestation'),
         ('supply', 'Fourniture')
     ]
+
     
-    estimates = models.ForeignKey(
+    estimates_id = models.ForeignKey(
         Estimates,
         on_delete=models.CASCADE,
         db_column='estimates_id',
@@ -365,7 +366,7 @@ class Invoices(models.Model):
         verbose_name="Numéro de facture"
     )
     
-    clients = models.ForeignKey(
+    clients_id = models.ForeignKey(
         Clients,
         on_delete=models.CASCADE,
         db_column='clients_id',
@@ -373,7 +374,7 @@ class Invoices(models.Model):
         verbose_name="Client"
     )
     
-    users = models.ForeignKey(
+    users_id = models.ForeignKey(
         Users,
         on_delete=models.CASCADE,
         db_column='users_id',
@@ -455,8 +456,8 @@ class Invoices(models.Model):
     def calculate_totals(self):
         lines = self.invoice_lines.all()
         
-        self.price_et = sum(line.amount_et or 0 for line in lines)
-        self.price_vat = sum(line.calculate_vat() for line in lines)
+        self.price_et = sum(line.price_et or 0 for line in lines)
+        self.price_vat = sum(line.price_vat or 0 for line in lines)
         self.price_ati = self.price_et + self.price_vat
         
         self.save()
