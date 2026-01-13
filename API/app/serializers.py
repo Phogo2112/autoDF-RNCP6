@@ -31,31 +31,31 @@ class UsersSerializer(serializers.ModelSerializer):
 class ClientsSerializer(serializers.ModelSerializer):
   class Meta:
     model = Clients
-    fields = ['id','client_type','name_organisation','first_name','last_name','address','postal_code','email','mobile','users_id','created_at','updated_at','siret']
-    read_only_fields = ['id','created_at','updated_at','users_id','modified_at','created_at','siret','updated_at']
+    fields = ['id','client_type','name_organisation','first_name','last_name','address','postal_code','email','mobile','users','created_at','updated_at','siret']
+    read_only_fields = ['id','created_at','updated_at','users','modified_at','created_at','siret','updated_at']
 
 
 class EstimatesSerializer(serializers.ModelSerializer):
   class Meta:
     model = Estimates
-    fields = ['id','clients_id','price_et','price_vat','price_ati','sent','sent_date','users_id','modified_at','created_at']
-    read_only_fields = ['id','created_at','users_id','created_by','sent','sent_date','modified_at','total_price','price_vat','price_ati','price_et','clients_id']
+    fields = ['id','clients','price_et','price_vat','price_ati','sent','sent_date','users','modified_at','created_at']
+    read_only_fields = ['id','created_at','users','created_by','sent','sent_date','modified_at','total_price','price_vat','price_ati','price_et','clients']
 
 class EstimateLinesSerializer(serializers.ModelSerializer):
   class Meta:
     model = EstimateLines
-    fields = ['id','client','estimate','product','quantity','price_unit','price_total','users_id','sent','sent_date']
-    read_only_fields = ['id','created_at','users_id','created_by','modified_at','sent_date',]
+    fields = ['id','client','estimate','product','quantity','price_unit','price_total','users','sent','sent_date']
+    read_only_fields = ['id','created_at','users','created_by','modified_at','sent_date',]
 
 
 class InvoicesSerializer(serializers.ModelSerializer):
   class Meta:
     model = Invoices
-    fields = ['id','invoice','product','quantity','price_unit','price_total','users_id','sent','sent_date','modified_at','payement_methode','payments_date','clients_id','users_id',]
-    read_only_fields = ['id','created_at','users_id','created_at','modified_at','clients_id','users_id','sent','sent_date','invoice_number','price_ati','price_vat','price_et',]
+    fields = ['id','invoice','product','quantity','price_unit','price_total','users','sent','sent_date','modified_at','payement_methode','payments_date','clients','users',]
+    read_only_fields = ['id','created_at','users','created_at','modified_at','clients','users','sent','sent_date','invoice_number','price_ati','price_vat','price_et',]
 
 class InvoiceLinesSerializer(serializers.ModelSerializer):
   class Meta:
     model = InvoiceLines
-    fields = ['id','invoice','product','quantity','price_unit','price_total','users_id','sent','sent_date']
-    read_only_fields = ['id','clients_id','users_id','created_at','modified_at','sent','sent_date','invoice_number','price_ati','price_vat','price_et','price_total',]
+    fields = ['id','invoice','product','quantity','price_unit','price_total','users','sent','sent_date']
+    read_only_fields = ['id','clients','users','created_at','modified_at','sent','sent_date','invoice_number','price_ati','price_vat','price_et','price_total',]

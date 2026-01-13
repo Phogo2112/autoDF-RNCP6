@@ -16,6 +16,7 @@ docker-compose.override.yml
 
 # BACKEND
 API/__pycache__/
+API/app/__pycache__/
 API/**/__pycache__/
 API/*.py[cod]
 API/*$py.class
@@ -78,3 +79,7 @@ Front/autodf/build/
 .next/
 out/
 build/
+
+scripts.ps1
+
+API/app/migrations/*

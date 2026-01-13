@@ -136,7 +136,7 @@ class Clients(models.Model):
         verbose_name="Téléphone mobile"
     )
     
-    users_id = models.ForeignKey(
+    users = models.ForeignKey(
         Users,
         on_delete=models.CASCADE,
         db_column='users_id',
@@ -172,7 +172,7 @@ class Clients(models.Model):
 
 class Estimates(models.Model):
     
-    users_id = models.ForeignKey(
+    users = models.ForeignKey(
         Users,
         on_delete=models.CASCADE,
         db_column='users_id',
@@ -180,7 +180,7 @@ class Estimates(models.Model):
         verbose_name=f"Créé par {Users.id}"
     )
     
-    clients_id = models.ForeignKey(
+    clients = models.ForeignKey(
         Clients,
         on_delete=models.CASCADE,
         db_column='clients_id',
@@ -270,7 +270,7 @@ class EstimateLines(models.Model):
     ]
 
     
-    estimates_id = models.ForeignKey(
+    estimates = models.ForeignKey(
         Estimates,
         on_delete=models.CASCADE,
         db_column='estimates_id',
@@ -366,7 +366,7 @@ class Invoices(models.Model):
         verbose_name="Numéro de facture"
     )
     
-    clients_id = models.ForeignKey(
+    clients = models.ForeignKey(
         Clients,
         on_delete=models.CASCADE,
         db_column='clients_id',
@@ -374,7 +374,7 @@ class Invoices(models.Model):
         verbose_name="Client"
     )
     
-    users_id = models.ForeignKey(
+    users = models.ForeignKey(
         Users,
         on_delete=models.CASCADE,
         db_column='users_id',

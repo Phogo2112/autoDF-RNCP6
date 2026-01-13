@@ -2,49 +2,40 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 import dj_database_url
-import sys
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-ENV_FILE = BASE_DIR / '.env.local'
+ENV_FILE = BASE_DIR / '.env'
 if ENV_FILE.exists():
     load_dotenv(ENV_FILE, encoding='utf-8', override=True)
-    print(f"✅ Fichier chargé : {ENV_FILE}")
-else:
-    ENV_FILE_FALLBACK = BASE_DIR / '.env'
-    if ENV_FILE_FALLBACK.exists():
-        load_dotenv(ENV_FILE_FALLBACK, encoding='utf-8', override=True)
-        print(f"✅ Fichier chargé : {ENV_FILE_FALLBACK}")
-    else:
-        print(f"❌ ERREUR : Aucun fichier .env trouvé")
-        sys.exit(1)
 
-SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key")
+SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = os.getenv("DEBUG", "True") == "True"
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
 CORS_ALLOWED_ORIGINS = os.getenv("CORS_ALLOWED_ORIGINS", "http://localhost:3000").split(",")
 
-print("\n=== DEBUG DATABASE CONFIG ===")
-print(f"DB_USER: {os.getenv('DB_USER')}")
-print(f"DB_PASSWORD: {os.getenv('DB_PASSWORD')[:3]}*** (première 3 lettres)")
-print(f"DB_NAME: {os.getenv('DB_NAME')}")
-print(f"DB_HOST: {os.getenv('DB_HOST', 'localhost')}")
-print(f"DB_PORT: {os.getenv('DB_PORT', '5432')}")
+if DEBUG == True :
+    print(f"\n📌 URL construite :")
+    db_url = f"postgresql://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@{os.getenv('POSTGRES_HOST', 'localhost')}:{os.getenv('POSTGRES_PORT', '5432')}/{os.getenv('POSTGRES_DB')}"
+    print(db_url)
+    print('=' * 60)
 
-db_url = f"postgresql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST', 'localhost')}:{os.getenv('DB_PORT', '5432')}/{os.getenv('DB_NAME')}"
-print(f"\n📌 URL construite :")
-print(f"postgresql://{os.getenv('DB_USER')}:***@{os.getenv('DB_HOST', 'localhost')}:{os.getenv('DB_PORT', '5432')}/{os.getenv('DB_NAME')}")
-print("="*60)
-
+if DEBUG == True:
+    print("\n=== DEBUG DATABASE CONFIG ===")
+    print(f"POSTGRES_USER: {os.getenv('POSTGRES_USER')}")
+    print(f"POSTGRES_PASSWORD: {os.getenv('POSTGRES_PASSWORD')[:3]}*** (première 3 lettres)")
+    print(f"POSTGRES_DB: {os.getenv('POSTGRES_DB')}")
+    print(f"POSTGRES_HOST: {os.getenv('POSTGRES_HOST', 'localhost')}")
+    print(f"POSTGRES_PORT: {os.getenv('POSTGRES_PORT', '5432')}")
+    
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME', 'autodf'),
-        'USER': os.getenv('DB_USER', 'postgres'),
-        'PASSWORD': os.getenv('DB_PASSWORD', ''),
-        'HOST': os.getenv('DB_HOST', 'localhost'),
-        'PORT': os.getenv('DB_PORT', '53630'),
+        'NAME': os.getenv('POSTGRES_DB', 'autodf'),
+        'USER': os.getenv('POSTGRES_USER', 'postgres'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', ''),
+        'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
+        'PORT': os.getenv('POSTGRES_PORT', '5432'),
         'OPTIONS': {
             'client_encoding': 'UTF8',
         },
