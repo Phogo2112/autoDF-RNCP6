@@ -1,12 +1,16 @@
 
-from .estimate import EstimateViewSet
-from .invoice import InvoiceViewSet
-from .statistics import StatisticsViewSet
-from .home import HomeViewset
+from .estimates import EstimatesViewSet
+from .invoices import InvoicesViewSet
+from .estimate_lines import EstimateLinesViewSet
+from .invoice_lines import InvoiceLinesViewSet
+from .clients import ClientsViewSet
+from .users import UsersViewSet
 
 __all__ = [
-    "EstimateViewSet",
-    "InvoiceViewSet", 
-    "StatisticsViewSet",
-    "HomeViewset",
+    "UsersViewSet",
+    "ClientsViewSet",
+    "EstimatesViewSet",
+    "EstimateLinesViewSet",
+    "InvoicesViewSet",
+    "InvoiceLinesViewSet",
 ]
