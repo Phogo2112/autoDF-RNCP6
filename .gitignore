@@ -79,7 +79,9 @@ Front/autodf/build/
 .next/
 out/
 build/
-
+Front/autodf/app/layout.tsx
+Front/autodf/app/page.tsx
 scripts.ps1
+API/app/migrations/0001_initial.py
 
-API/app/migrations/*
+API/app/migrations/**

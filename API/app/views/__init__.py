@@ -1,16 +1,23 @@
 
-from .estimates import EstimatesViewSet
-from .invoices import InvoicesViewSet
-from .estimate_lines import EstimateLinesViewSet
-from .invoice_lines import InvoiceLinesViewSet
-from .clients import ClientsViewSet
-from .users import UsersViewSet
+from .estimate import EstimateViewSet
+from .invoice import InvoiceViewSet
+from .estimate_line import EstimateLineViewSet
+from .invoice_line import InvoiceLineViewSet
+from .client import ClientViewSet
+from .user import UserViewSet
+from .auth_views import (
+    RegisterView,
+    LoginView,
+
+)
 
 __all__ = [
-    "UsersViewSet",
-    "ClientsViewSet",
-    "EstimatesViewSet",
-    "EstimateLinesViewSet",
-    "InvoicesViewSet",
-    "InvoiceLinesViewSet",
+    "UserViewSet",
+    "ClientViewSet",
+    "EstimateViewSet",
+    "EstimateLineViewSet",
+    "InvoiceViewSet",
+    "InvoiceLineViewSet",
+    "RegisterView",
+    "LoginView",
 ]

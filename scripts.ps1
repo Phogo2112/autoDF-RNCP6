@@ -1,20 +1,20 @@
 function Start-Project {
-    Write-Host "`n Démarrage..." -ForegroundColor Cyan
+    Write-Host "`n Dï¿½marrage..." -ForegroundColor Cyan
     docker-compose up -d
-    Write-Host " Démarré !`n" -ForegroundColor Green
+    Write-Host " Dmarr !`n" -ForegroundColor Green
 }
 
 function Stop-Project {
-    Write-Host "`n Arrêt..." -ForegroundColor Yellow
+    Write-Host "`n Arrt..." -ForegroundColor Yellow
     docker-compose down
-    Write-Host " Arrêté !`n" -ForegroundColor Green
+    Write-Host " Arrt !`n" -ForegroundColor Green
 }
 
 function Migrate-All {
     Write-Host "`n Migrations..." -ForegroundColor Cyan
     docker exec -it autodf-api-1 python manage.py makemigrations
     docker exec -it autodf-api-1 python manage.py migrate
-    Write-Host " Terminé !`n" -ForegroundColor Green
+    Write-Host " Termin !`n" -ForegroundColor Green
 }
 
 function Create-SuperUser {
@@ -34,8 +34,8 @@ function Enter-Container {
 
 function Show-Commands {
     Write-Host "`n=== COMMANDES ===" -ForegroundColor Cyan
-    Write-Host "Start-Project     - Démarre" -ForegroundColor Yellow
-    Write-Host "Stop-Project      - Arrête" -ForegroundColor Yellow
+    Write-Host "Start-Project     - Dmarre" -ForegroundColor Yellow
+    Write-Host "Stop-Project      - Arrte" -ForegroundColor Yellow
     Write-Host "Migrate-All       - Migrations" -ForegroundColor Yellow
     Write-Host "Create-SuperUser  - Admin" -ForegroundColor Yellow
     Write-Host "Show-Logs         - Logs" -ForegroundColor Yellow
@@ -43,5 +43,5 @@ function Show-Commands {
     Write-Host "Show-Commands     - Aide`n" -ForegroundColor Yellow
 }
 
-Write-Host "`n Scripts chargés !`n" -ForegroundColor Green
+Write-Host "`n Scripts chargs !`n" -ForegroundColor Green
 Show-Commands
