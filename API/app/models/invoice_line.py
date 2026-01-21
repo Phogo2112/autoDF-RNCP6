@@ -1,4 +1,6 @@
 from django.db import models
+from django.core.exceptions import ValidationError
+from decimal import Decimal
 
 class InvoiceLine(models.Model):
     LINES_TYPE_CHOICES = [

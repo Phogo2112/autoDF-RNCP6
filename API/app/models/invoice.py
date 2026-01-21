@@ -1,4 +1,6 @@
 from django.db import models
+from django.core.exceptions import ValidationError
+
 
 class Invoice(models.Model):
     STATUS_CHOICES = [
@@ -83,19 +85,19 @@ class Invoice(models.Model):
     )
     
     class Meta:
-        db_table = 'invoices'
+        db_table = 'invoice'
         verbose_name = "Facture"
         verbose_name_plural = "Factures"
     
     def __str__(self):
-        return f"{self.invoice_number} - {self.clients} - {self.get_status_display()}"
+        return f"{self.invoice_number} - {self.client} - {self.get_status_display()}"
     
     def is_editable(self):
         return self.status == 'draft'
     
     def save(self, *args, **kwargs):
         if self.pk:
-            old_instance = Invoices.objects.get(pk=self.pk)
+            old_instance = Invoice.objects.get(pk=self.pk)
             if not old_instance.is_editable():
                 if self.status != old_instance.status:
                     super().save(update_fields=['status', 'modified_at'])

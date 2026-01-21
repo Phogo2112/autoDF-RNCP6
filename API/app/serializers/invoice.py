@@ -48,7 +48,7 @@ class InvoiceSerializer(serializers.ModelSerializer):
         return obj.client.name_organisation
     
     def get_invoice_lines(self, obj):
-        from app.serializers.invoice_lines import InvoiceLineSerializer
+        from app.serializers.invoice_line import InvoiceLineSerializer
         lines = obj.invoice_line.all()
         return InvoiceLineSerializer(lines, many=True).data
     

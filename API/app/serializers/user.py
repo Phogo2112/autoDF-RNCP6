@@ -31,7 +31,6 @@ class UserSerializer(serializers.ModelSerializer):
     
     
     def create(self, validated_data):
-        """Crée un utilisateur avec mot de passe hashé"""
         password = validated_data.pop('password')
         user = User(**validated_data)
         user.set_password(password)
@@ -39,7 +38,6 @@ class UserSerializer(serializers.ModelSerializer):
         return user
     
     def update(self, instance, validated_data):
-        """Met à jour un utilisateur"""
         password = validated_data.pop('password', None)
         
         for attr, value in validated_data.items():
