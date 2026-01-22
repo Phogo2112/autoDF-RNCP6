@@ -26,7 +26,6 @@ class InvoiceLineSerializer(serializers.ModelSerializer):
         read_only_fields = ['id', 'amount_et', 'vat_amount']
     
     def validate(self, data):
-        """Empêche la modification si la facture n'est plus en brouillon"""
         if self.instance and not self.instance.invoice.is_editable():
             raise serializers.ValidationError(
                 f"Cette facture ne peut plus être modifiée (statut: {self.instance.invoice.get_status_display()})"

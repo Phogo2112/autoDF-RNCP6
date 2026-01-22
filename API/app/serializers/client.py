@@ -33,7 +33,6 @@ class ClientSerializer(serializers.ModelSerializer):
         }
     
     def validate(self, data):
-        """Validation conditionnelle selon le type de client"""
         client_type = data.get('client_type')
         
         if client_type == 'individual':
