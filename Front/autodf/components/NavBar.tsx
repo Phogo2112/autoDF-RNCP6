@@ -1,17 +1,34 @@
-"use client";
-import { useState } from "react";
+'use client';
+import { useState, useEffect, } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
+import authService from "../app/src/service/authService";
 
 export default function Navbar() {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("/");
+  const [isAuth, setIsAuth] = useState(false);
+
+  useEffect(() => {
+    setIsAuth(authService.isAuthenticated());
+  }, []);
+
+  const handleLogout = () => {
+    authService.logout();
+    setIsAuth(false);
+    router.push("/login");
+  };
 
   const navLinks = [
     { href: "/", label: "Accueil" },
-    { href: "/src/estimate", label: "Devis" },
-    { href: "/src/invoice", label: "Factures" },
-    { href: "/src/home", label: "Dashboard" },
+    { href: "/estimate", label: "Devis" },
+    { href: "/invoice", label: "Factures" },
+    { href: "/home", label: "Dashboard" },
+    { href: "/login", label: "Se connecter" },
+    { href: "/register", label: "S'inscrire" },
+    { href: "/logout", label: "Se deconnecter" },
   ];
 
   return (
@@ -96,34 +113,58 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* CTA Button */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.4, duration: 0.5 }}
-              className="hidden md:block"
-            >
-              <button className="relative group overflow-hidden px-6 py-2.5 rounded-lg font-medium text-white transition-all duration-300">
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 transition-transform duration-300 group-hover:scale-105"></div>
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <span className="relative flex items-center space-x-2">
-                  <span>Nouveau document</span>
-                  <svg
-                    className="w-4 h-4 transition-transform group-hover:translate-x-1"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+            {/* Authentication / CTA */}
+            <div className="hidden md:flex items-center space-x-4">
+              {isAuth ? (
+                <>
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.4, duration: 0.5 }}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 4v16m8-8H4"
-                    />
-                  </svg>
-                </span>
-              </button>
-            </motion.div>
+                    <button className="relative group overflow-hidden px-6 py-2.5 rounded-lg font-medium text-white transition-all duration-300">
+                      <div className="absolute inset-0 bg-linear-to-r from-cyan-500 via-blue-500 to-purple-500 transition-transform duration-300 group-hover:scale-105"></div>
+                      <span className="relative flex items-center space-x-2">
+                        <span>Nouveau document</span>
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                        </svg>
+                      </span>
+                    </button>
+                  </motion.div>
+
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={handleLogout}
+                    className="text-gray-400 hover:text-white px-4 py-2 text-sm font-medium transition-colors"
+                  >
+                    Déconnexion
+                  </motion.button>
+                </>
+              ) : (
+                <div className="flex items-center space-x-2">
+                  <Link href="/login">
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="text-gray-300 hover:text-white px-4 py-2 text-sm font-medium transition-colors"
+                    >
+                      Connexion
+                    </motion.button>
+                  </Link>
+                  <Link href="/register">
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="bg-linear-to-r from-cyan-500 to-blue-500 text-white px-5 py-2 rounded-lg text-sm font-medium shadow-lg shadow-cyan-500/20"
+                    >
+                      S'inscrire
+                    </motion.button>
+                  </Link>
+                </div>
+              )}
+            </div>
 
             {/* Mobile menu button */}
             <motion.button
@@ -187,14 +228,37 @@ export default function Navbar() {
                     </Link>
                   </motion.div>
                 ))}
-                <motion.button
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.4 }}
-                  className="w-full mt-4 px-4 py-3 rounded-lg bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 text-white font-medium hover:shadow-lg hover:shadow-blue-500/50 transition-all"
-                >
-                  Nouveau document
-                </motion.button>
+                {isAuth ? (
+                  <>
+                    <motion.button
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.4 }}
+                      className="w-full mt-4 px-4 py-3 rounded-lg bg-linear-to-r from-cyan-500 via-blue-500 to-purple-500 text-white font-medium hover:shadow-lg hover:shadow-blue-500/50 transition-all"
+                    >
+                      Nouveau document
+                    </motion.button>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full mt-2 px-4 py-3 rounded-lg bg-white/5 text-gray-300 font-medium hover:bg-white/10 transition-all text-left"
+                    >
+                      Déconnexion
+                    </button>
+                  </>
+                ) : (
+                  <div className="pt-4 space-y-2">
+                    <Link href="/login" className="block" onClick={() => setIsOpen(false)}>
+                      <button className="w-full px-4 py-3 rounded-lg bg-white/5 text-white font-medium border border-white/10">
+                        Connexion
+                      </button>
+                    </Link>
+                    <Link href="/register" className="block" onClick={() => setIsOpen(false)}>
+                      <button className="w-full px-4 py-3 rounded-lg bg-linear-to-r from-cyan-500 to-blue-500 text-white font-medium">
+                        S'inscrire
+                      </button>
+                    </Link>
+                  </div>
+                )}
               </div>
             </motion.div>
           )}
