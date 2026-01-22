@@ -68,7 +68,7 @@ class Estimate(models.Model):
     )
     
     class Meta:
-        db_table = 'estimates'
+        db_table = 'estimate'
         verbose_name = "Devis"
         verbose_name_plural = "Devis"
     

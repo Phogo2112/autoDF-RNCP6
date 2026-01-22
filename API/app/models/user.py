@@ -40,6 +40,34 @@ class User(AbstractUser):
         default='',
         verbose_name="Téléphone mobile"
     )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="Date de création"
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        verbose_name="Date de modification"
+    )
+    mobile = models.CharField(
+        max_length=20,
+        blank=True,
+        default='',
+        verbose_name="Téléphone mobile"
+    )
+    city = models.CharField(
+        max_length=100,
+        blank=True,
+        default='',
+        verbose_name="Ville"
+    )
+    postal_code = models.CharField(
+        max_length=10,
+        blank=True,
+        default='',
+        verbose_name="Code postal"
+    )
+
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
@@ -47,7 +75,7 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     
     class Meta:
-        db_table = 'app_users'
+        db_table = 'user'
         verbose_name = "Utilisateur"
         verbose_name_plural = "Utilisateurs"
     

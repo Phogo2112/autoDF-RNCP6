@@ -3,24 +3,24 @@ from app.models import User
 
 
 class RegisterSerializer(serializers.ModelSerializer):
-
     password = serializers.CharField(
-        write_only=True,
-        required=True,
+        write_only=True, 
+        required=True, 
         min_length=8,
         style={'input_type': 'password'}
     )
     password_confirm = serializers.CharField(
-        write_only=True,
-        required=True,
+        write_only=True, 
+        required=True, 
         min_length=8,
         style={'input_type': 'password'}
     )
-    
+
     class Meta:
         model = User
         fields = [
             'email',
+            'username',
             'password',
             'password_confirm',
             'name_business',
@@ -35,11 +35,19 @@ class RegisterSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'email': {'required': True},
             'name_business': {'required': True},
-            'siret': {'required': True}
+            'username': {'required': True},
+            'siret': {
+                'required': True,
+                'min_length': 14,
+                'max_length': 14,
+                'error_messages': {
+                    'min_length': 'Le SIRET doit contenir exactement 14 chiffres',
+                    'max_length': 'Le SIRET doit contenir exactement 14 chiffres',
+                }
+            },
         }
     
     def validate(self, data):
-        """Vérifie que les deux mots de passe correspondent"""
         if data['password'] != data['password_confirm']:
             raise serializers.ValidationError({
                 'password_confirm': 'Les mots de passe ne correspondent pas'
@@ -47,7 +55,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         return data
     
     def create(self, validated_data):
-        """Crée un nouvel utilisateur avec mot de passe hashé"""
         validated_data.pop('password_confirm')
         password = validated_data.pop('password')
         user = User(**validated_data)

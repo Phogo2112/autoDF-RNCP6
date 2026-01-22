@@ -56,7 +56,7 @@ class EstimateLine(models.Model):
     )
     
     class Meta:
-        db_table = 'estimate_lines'
+        db_table = 'estimate_line'
         verbose_name = "Ligne de devis"
         verbose_name_plural = "Lignes de devis"
     

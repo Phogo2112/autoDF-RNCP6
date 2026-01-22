@@ -56,7 +56,7 @@ class InvoiceLine(models.Model):
     )
     
     class Meta:
-        db_table = 'invoice_lines'
+        db_table = 'invoice_line'
         verbose_name = "Ligne de facture"
         verbose_name_plural = "Lignes de facture"
     
